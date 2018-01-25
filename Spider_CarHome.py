@@ -25,18 +25,22 @@ ret_content = ret_content('#tab-content-item2')
 doc = ret_content('#contentSeries')
 
 for item in doc.items('dl'):
-    time.sleep(6)
+    time.sleep(1)
     if item.attr('data') == 'SR_Ht':
         continue
     for itemX in item('dd').items():
-        time.sleep(6)
+        time.sleep(2)
         print(itemX('a').attr('cname') + ' ' )
         brand_url = pre_url + itemX('a').attr('vos') + post_url
         request = urllib.request.Request(brand_url)
-        ret_html = urllib.request.urlopen(request).read().decode('gb2312', 'ignore')
-        ret_pq = pq(ret_html)('span')('.fn-left')
-        for itemY in ret_pq.items():
-            print(itemY('a').text())
+        try:
+            ret_html = urllib.request.urlopen(request).read().decode('gb2312', 'ignore')
+            ret_pq = pq(ret_html)('span')('.fn-left')
+            for itemY in ret_pq.items():
+                print(itemY('a').text())
+        except:
+            print(brand_url)
+
 
 
 #print(doc)
